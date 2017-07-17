@@ -8,6 +8,9 @@
 		}
 	],
     "type": "craft-plugin",
+    "extra": {
+	"handle": "tobiasax"
+    }
     "require": {
         "composer/installers": "~1.0"
     }
