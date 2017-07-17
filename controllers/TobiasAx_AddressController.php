@@ -21,7 +21,7 @@ class TobiasAx_AddressController extends BaseController
         try {
             $address = craft()->tobiasAx_address->getByZipcodeAndHouseNumber($zipcode, $houseNumber);
 
-            if (!empty($address->Street)) {
+            if (isset($address->Street)) {
                 return $this->returnJson($address->getGetAttributes());
             } else {
                 return $this->returnJson(['error' => 1]);

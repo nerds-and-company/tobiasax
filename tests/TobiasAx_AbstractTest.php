@@ -19,8 +19,8 @@ abstract class TobiasAx_AbstractTest extends BaseTest
         parent::setUpBeforeClass();
 
         // classes
-        require_once __DIR__ . '/../../../../vendor/nerds-and-company/schematic/src/Services/Base.php';
-        require_once __DIR__ . '/../../../../vendor/nerds-and-company/schematic/src/Models/Result.php';
+        require_once __DIR__ . '/../../../../vendor/itmundi/schematic/src/Services/Base.php';
+        require_once __DIR__ . '/../../../../vendor/itmundi/schematic/src/Models/Result.php';
 
         // plugin
         require_once __DIR__ . '/../TobiasAxPlugin.php';

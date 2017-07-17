@@ -177,9 +177,9 @@ class TobiasAx_AdvertisementModel extends BaseElementModel
 
     public function isDirect()
     {
-        $rentalType = (array) $this->content->rentalType;
+        $rentType = (array) $this->content->rentType;
 
-        return in_array('direct', $rentalType);
+        return in_array('direct', $rentType);
     }
 
     /**

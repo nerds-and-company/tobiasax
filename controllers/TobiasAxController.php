@@ -33,7 +33,7 @@ class TobiasAxController extends BaseController
         }
 
         // Check user edit permission
-        if (craft()->request->isCpRequest() && !$user->can('tobiasax_edit_' . $variables['type']->handle)) {
+        if (craft()->request->isCpRequest() && !$user->can('tobiasax:edit:' . $variables['type']->handle)) {
             throw new HttpException(403);
         }
 
@@ -41,7 +41,7 @@ class TobiasAxController extends BaseController
 
         // Check user edit peer permission
         $isPeerEntry = $variables['element']->authorId != null && $variables['element']->authorId != $user->id;
-        if (craft()->request->isCpRequest() && !$user->can('tobiasax_editPeerEntries') && $isPeerEntry) {
+        if (craft()->request->isCpRequest() && !$user->can('tobiasax:editPeerEntries') && $isPeerEntry) {
             throw new HttpException(403);
         }
 

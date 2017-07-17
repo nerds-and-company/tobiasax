@@ -35,9 +35,6 @@ class TobiasAx_RequestService extends BaseApplicationComponent
         ], $data);
 
         $envelope = $this->renderEnvelope($template, $data);
-
-        error_log($envelope);
-
         $request = $this->createRequestClient($url, $envelope);
 
         return $request;
@@ -81,11 +78,11 @@ class TobiasAx_RequestService extends BaseApplicationComponent
      */
     public function renderEnvelope($template, $data)
     {
-        $oldPath = craft()->templates->getTemplatesPath();
+        $oldPath = craft()->path->getTemplatesPath();
 
         try {
             $newPath = craft()->path->getPluginsPath();
-            craft()->templates->setTemplatesPath($newPath);
+            craft()->path->setTemplatesPath($newPath);
             $envelope = craft()->templates->render($template, $data);
 
         } catch (TemplateLoaderException $e) {
@@ -93,7 +90,7 @@ class TobiasAx_RequestService extends BaseApplicationComponent
         } catch (Exception $e) {
             throw new TobiasAx_SystemException("Unknown error rendering SOAP template: " . $e->getMessage(), null, $e);
         } finally {
-            craft()->templates->setTemplatesPath($oldPath);
+            craft()->path->setTemplatesPath($oldPath);
         }
 
         return $envelope;

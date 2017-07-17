@@ -26,16 +26,11 @@ class TobiasAx_RegistrationService extends BaseApplicationComponent
      * Get registration by person ID and status
      * @param string $personId
      * @param TobiasAX_RegistrationStatus $status
-     * @return TobiasAx_SeekerRegistrationModel[]
+     * @return TobiasAx_SeekerRegistrationModel
      */
     public function getRegistrationsByPerson($personId, $status = TobiasAX_RegistrationStatus::ACTIVE)
     {
         $propertySeeker = craft()->tobiasAx_propertySeeker->getPropertySeekerByPersonId($personId);
-
-        if ($propertySeeker == null) {
-            return [];
-        }
-
         $registrations = $propertySeeker->getRegistrationsByStatus($status);
 
         return $registrations;

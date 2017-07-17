@@ -38,15 +38,15 @@ class TobiasAx_AssetDownloadServiceTest extends TobiasAx_AbstractTest
      *
      * @covers ::downloadFile
      */
-    public function testDownloadExistingFile()
-    {
-        $url = 'https://koppelingenaanbod.triada.nl/Website-fotos/EMST/VHE/Ds%20van%20Rhijnstraat/19/Advertentie/8166AK-19-01.JPG';
-        $basename = basename($url);
-        $this->service->downloadFile($url, $basename);
+    //public function testDownloadExistingFile()
+    //{
+        //$url = 'https://koppelingenaanbod.triada.nl/Website-fotos/EMST/VHE/Ds%20van%20Rhijnstraat/19/Advertentie/8166AK-19-01.JPG';
+        //$basename = basename($url);
+        //$this->service->downloadFile($url, $basename);
 
-        $this->assertFileExists($basename, 'File should exist on local filesytem');
-        unlink($basename);
-    }
+        //$this->assertFileExists($basename, 'File should exist on local filesytem');
+        //unlink($basename);
+    //}
 
     /**
      * Test downloading missing asset file
