@@ -1,0 +1,16 @@
+{% extends 'tobiasax/templates/soap/_wsa_envelope' %}
+
+{% block body_content %}
+  <cus:GetAllPublications>
+    {% if start | default %}
+      <cus:start>{{ start | date('Y-m-d') }}</cus:start>
+    {% endif %}
+
+    {% if end | default %}
+      <cus:end>{{ end | date('Y-m-d') }}</cus:end>
+    {% endif %}
+
+    <cus:companyId>{{ companyId }}</cus:companyId>
+    <cus:expand>{{ expand }}</cus:expand>
+  </cus:GetAllPublications>
+{% endblock %}

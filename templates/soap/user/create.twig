@@ -1,0 +1,18 @@
+{% extends 'tobiasax/templates/soap/_wsa_envelope' %}
+
+{% from 'tobiasax/templates/soap/_recursive_soap_model' import recursiveSoapSubModel %}
+
+{% set prefix = 'sg' %}
+
+{% block body_content %}
+  <cus:CreateUser>
+    <cus:user>
+      {% spaceless %}
+        {% for key, value in user %}
+          {{ recursiveSoapSubModel(key, value, prefix) }}
+        {% endfor %}
+      {% endspaceless %}
+    </cus:user>
+    <cus:companyId>{{ companyId }}</cus:companyId>
+  </cus:CreateUser>
+{% endblock %}

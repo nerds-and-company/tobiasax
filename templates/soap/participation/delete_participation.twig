@@ -1,0 +1,8 @@
+{% extends 'tobiasax/templates/soap/_wsa_envelope' %}
+
+{% block body_content %}
+  <cus:DeleteParticipation>
+    <cus:id>{{ participationId }}</cus:id>
+    <cus:companyId>{{ companyId }}</cus:companyId>
+  </cus:DeleteParticipation>
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends 'tobiasax/templates/soap/_wsa_envelope' %}
+
+{% block body_content %}
+  <cus:GetAttributes>
+    <cus:id>{{ id }}</cus:id><!-- BuildingId -->
+    <cus:objectType>{{ objectType }}</cus:objectType>
+    <cus:category>{{ category }}</cus:category><!-- Woningwaardering/Verhuur -->
+    <cus:companyId>{{ companyId }}</cus:companyId>
+  </cus:GetAttributes>
+{% endblock %}

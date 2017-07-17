@@ -1,0 +1,21 @@
+{% macro recursiveSoapSubModel(key, value, prefix) %}
+  {% import _self as self %}
+
+  {% if value is not empty %}
+    {% if value is iterable %}
+      {% if key is not empty %}
+        <{{ prefix }}:{{ key }}>
+      {% endif %}
+      {% for keyChild, child in value %}
+        {{ self.recursiveSoapSubModel(keyChild, child, prefix) }}
+      {% endfor %}
+      {% if key is not empty %}
+        </{{ prefix }}:{{ key }}>
+      {% endif %}
+    {% elseif value is same as(true) %} {# Boolean check #}
+      <{{ prefix }}:{{ key }}>{% if value %}true{% else %}false{% endif %}</{{ prefix }}:{{ key }}>
+    {% else %}
+      <{{ prefix }}:{{ key }}>{{ value }}</{{ prefix }}:{{ key }}>
+    {% endif %}
+  {% endif %}
+{% endmacro %}

@@ -1,0 +1,29 @@
+{% extends 'tobiasax/templates/soap/_wsa_envelope' %}
+
+{% block body_content %}
+  <cus:GetParticipations>
+    <cus:companyId>{{ companyId }}</cus:companyId>
+
+    {% if publicationId %}
+    <cus:publicationId>{{ publicationId }}</cus:publicationId>
+    {% endif %}
+
+    {% if seekerRegistrationId %}
+    <cus:seekerRegistrationId>{{ seekerRegistrationId }}</cus:seekerRegistrationId>
+    {% endif %}
+
+    <cus:expand>{{ expand }}</cus:expand>
+
+    {% if limit %}
+    <cus:top>{{ limit }}</cus:top>
+    {% endif %}
+
+    {% if offset %}
+    <cus:skip>{{ offset }}</cus:skip>
+    {% endif %}
+
+    {% if sort %}
+    <cus:orderBy>{{ sort }}{% if sortOrder %} {{ sortOrder }}{% endif %}</cus:orderBy>
+    {% endif %}
+  </cus:GetParticipations>
+{% endblock %}

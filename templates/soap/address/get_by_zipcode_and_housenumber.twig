@@ -1,0 +1,9 @@
+{% extends 'tobiasax/templates/soap/_wsa_envelope' %}
+
+{% block body_content %}
+  <cus:GetAddressByZipcodeAndHouseNumber>
+    <cus:zipcode>{{ zipcode }}</cus:zipcode>
+    <cus:houseNumber>{{ houseNumber }}</cus:houseNumber>
+    <cus:companyId>{{ companyId }}</cus:companyId>
+  </cus:GetAddressByZipcodeAndHouseNumber>
+{% endblock %}

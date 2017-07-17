@@ -1,0 +1,16 @@
+{% extends 'tobiasax/templates/soap/_wsa_envelope' %}
+
+{% from 'tobiasax/templates/soap/_recursive_soap_model' import recursiveSoapSubModel %}
+
+{% set prefix = 'sg' %}
+
+{% block body_content %}
+  <cus:UpdateCommunication>
+    <cus:communication>
+      {% for key, value in communication %}
+        {{ recursiveSoapSubModel(key, value, prefix) }}
+      {% endfor %}
+    </cus:communication>
+    <cus:companyId>{{ companyId }}</cus:companyId>
+  </cus:UpdateCommunication>
+{% endblock %}

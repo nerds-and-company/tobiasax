@@ -1,0 +1,10 @@
+{% extends 'tobiasax/templates/soap/_wsa_envelope' %}
+
+{% block body_content %}
+    <cus:CreateParticipation>
+        <cus:publicationId>{{ publicationId }}</cus:publicationId>
+        <cus:seekerRegistrationId>{{ seekerRegistrationId }}</cus:seekerRegistrationId>
+        <cus:preference>{{ preference }}</cus:preference>
+        <cus:companyId>{{ companyId }}</cus:companyId>
+    </cus:CreateParticipation>
+{% endblock %}

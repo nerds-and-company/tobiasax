@@ -1,0 +1,36 @@
+{% extends "_layouts/cp" %}
+{% import "_includes/forms" as forms %}
+
+{% if element.id %}
+	{% set title = element.getTitle %}
+{% else %}
+	{% set title = "Create a new advertisement"|t %}
+{% endif %}
+
+{% set crumbs = [
+    { label: "Advertenties"|t, url: url('tobiasax') },
+] %}
+
+{% block content %}
+	<form method="post" accept-charset="UTF-8" enctype="multipart/form-data">
+		<input type="hidden" name="action" value="tobiasAx/saveElement">
+		<input type="hidden" name="redirect" value="tobiasax">
+		<input type="hidden" name="advertTypeId" value="{{ type.id }}">
+		{% if element.id %}<input type="hidden" name="elementId" value="{{ element.id }}">{% endif %}
+
+		{% for tab in type.getFieldLayout().getTabs() %}
+			<div id="tab{{ loop.index }}"{% if not loop.first %} class="hidden"{% endif %}>
+				{% include "_includes/fields" with {
+					fields: tab.getFields(),
+					element: element
+				} only %}
+			</div>
+		{% endfor %}
+
+		<div class="buttons">
+			<div class="btngroup submit">
+				<input type="submit" class="btn submit" value="{{ 'Save'|t }}">
+			</div>
+		</div>
+	</form>
+{% endblock %}

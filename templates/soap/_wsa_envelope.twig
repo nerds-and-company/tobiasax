@@ -1,0 +1,8 @@
+{% extends 'tobiasax/templates/soap/_envelope' %}
+
+{% block header %}
+  <soap:Header xmlns:wsa="http://www.w3.org/2005/08/addressing">
+    <wsa:Action>{{ wsaAction | default(addressingEndpoint ~ actionName) }}</wsa:Action>
+    <wsa:To>{{ endpoint }}</wsa:To>
+  </soap:Header>
+{% endblock %}

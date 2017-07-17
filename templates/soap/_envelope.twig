@@ -1,0 +1,20 @@
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope"
+               xmlns:cus="http://www.SG.nl/services/20121122/CustomerPortalAX"
+               xmlns:sg="http://schemas.datacontract.org/2004/07/SG.Models.Global"
+               xmlns:sg1="http://schemas.datacontract.org/2004/07/SG.Models.Rentals"
+               xmlns:sg2="http://schemas.datacontract.org/2004/07/SG.Models.Contracts"
+               xmlns:sg3="http://schemas.datacontract.org/2004/07/SG.Models.RealEstate"
+               xmlns:sg4="http://schemas.datacontract.org/2004/07/SG.Models.Rentals">
+  {% block header %}
+    <soap:Header>
+      {% block header_content %}
+      {% endblock %}
+    </soap:Header>
+  {% endblock %}
+  {% block body %}
+    <soap:Body>
+      {% block body_content %}
+      {% endblock %}
+    </soap:Body>
+  {% endblock %}
+</soap:Envelope>

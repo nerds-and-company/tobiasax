@@ -1,0 +1,9 @@
+{% extends 'tobiasax/templates/soap/_wsa_envelope' %}
+
+{% block body_content %}
+    <cus:GetPropertySeekerByPersonId>
+        <cus:personId>{{ personId }}</cus:personId>
+        <cus:companyId>{{ companyId }}</cus:companyId>
+        <cus:expand>{{ expand }}</cus:expand>
+    </cus:GetPropertySeekerByPersonId>
+{% endblock %}

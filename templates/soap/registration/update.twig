@@ -1,0 +1,19 @@
+{% extends 'tobiasax/templates/soap/_wsa_envelope' %}
+
+{% from 'tobiasax/templates/soap/_recursive_soap_model' import recursiveSoapSubModel %}
+
+{% set prefix = 'sg4' %}
+
+{% block body_content %}
+  <cus:UpdateSeekerRegistration>
+    <cus:seekerRegistration>
+      <{{ prefix }}:CompanyId>{{ companyId }}</{{ prefix }}:CompanyId>
+      {% spaceless %}
+        {% for key, value in registration %}
+          {{ recursiveSoapSubModel(key, value, prefix) }}
+        {% endfor %}
+      {% endspaceless %}
+    </cus:seekerRegistration>
+    <cus:companyId>{{ companyId }}</cus:companyId>
+  </cus:UpdateSeekerRegistration>
+{% endblock %}

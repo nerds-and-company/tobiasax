@@ -1,0 +1,23 @@
+{% extends 'tobiasax/templates/soap/_wsa_envelope' %}
+
+{% from 'tobiasax/templates/soap/_recursive_soap_model' import recursiveSoapSubModel %}
+
+{% set prefixPerson = 'sg' %}
+{% set prefixRegistration = 'sg4' %}
+
+{% block body_content %}
+  <cus:CreateCoRegistrant>
+    <cus:coRegistrant>
+      {% spaceless %}
+        {% for key, value in coregistrantPerson %}
+          {{ recursiveSoapSubModel(key, value, prefixPerson) }}
+        {% endfor %}
+        {% for key, value in coregistrantRegistration %}
+          {{ recursiveSoapSubModel(key, value, prefixRegistration) }}
+        {% endfor %}
+      {% endspaceless %}
+    </cus:coRegistrant>
+    <cus:seekerRegistrationId>{{ registrationId }}</cus:seekerRegistrationId>
+    <cus:companyId>{{ companyId }}</cus:companyId>
+  </cus:CreateCoRegistrant>
+{% endblock %}
