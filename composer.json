@@ -1,0 +1,14 @@
+{
+    "name": "nerds-and-company/tobiasax",
+    "description": "TobiasAx plugin for Craft CMS",
+    "authors": [
+		{
+			"name": "Mark Pross",
+			"email": "m.pross@nerds.company"
+		}
+	],
+    "type": "craft-plugin",
+    "require": {
+        "composer/installers": "~1.0"
+    }
+}
