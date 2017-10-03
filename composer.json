@@ -1,17 +1,18 @@
 {
-    "name": "nerds-and-company/tobiasax",
-    "description": "TobiasAx plugin for Craft CMS",
-    "authors": [
-		{
-			"name": "Mark Pross",
-			"email": "m.pross@nerds.company"
-		}
-	],
-    "type": "craft-plugin",
-    "extra": {
-	"handle": "tobiasax"
+  "name": "nerds-and-company/tobiasax",
+  "description": "TobiasAx plugin for Craft CMS",
+  "minimum-stability": "dev",
+  "authors": [
+    {
+      "name": "Mark Pross",
+      "email": "m.pross@nerds.company"
     }
-    "require": {
-        "composer/installers": "~1.0"
-    }
+  ],
+  "type": "craft-plugin",
+  "extra": {
+    "handle": "tobiasax"
+  },
+  "require": {
+    "composer/installers": "~1.0"
+  }
 }
