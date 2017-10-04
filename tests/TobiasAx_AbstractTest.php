@@ -3,6 +3,7 @@
 namespace Craft;
 
 use PHPUnit_Framework_MockObject_MockObject as Mock;
+use Exception;
 
 /**
  * Class designed to help out mocking TobiasAX objects, made abstract so PHPUnit ignores it.
@@ -19,8 +20,8 @@ abstract class TobiasAx_AbstractTest extends BaseTest
         parent::setUpBeforeClass();
 
         // classes
-        require_once __DIR__ . '/../../../../vendor/itmundi/schematic/src/Services/Base.php';
-        require_once __DIR__ . '/../../../../vendor/itmundi/schematic/src/Models/Result.php';
+        require_once __DIR__ . '/../../../../vendor/nerds-and-company/schematic/src/Services/Base.php';
+        require_once __DIR__ . '/../../../../vendor/nerds-and-company/schematic/src/Models/Result.php';
 
         // plugin
         require_once __DIR__ . '/../TobiasAxPlugin.php';
@@ -42,6 +43,7 @@ abstract class TobiasAx_AbstractTest extends BaseTest
         require_once __DIR__ . '/../services/TobiasAx_PersonIncomeService.php';
         require_once __DIR__ . '/../services/TobiasAx_RegistrationService.php';
         require_once __DIR__ . '/../services/TobiasAx_RegistrationConnectorService.php';
+        require_once __DIR__ . '/../services/TobiasAx_RegistrationStoreService.php';
         require_once __DIR__ . '/../services/TobiasAx_AssetService.php';
         require_once __DIR__ . '/../services/TobiasAx_AssetConnectorService.php';
         require_once __DIR__ . '/../services/TobiasAx_AssetDownloadService.php';
@@ -75,8 +77,11 @@ abstract class TobiasAx_AbstractTest extends BaseTest
      */
     protected function getMockCraftService($class, $service)
     {
-        $mock = $this->getMockBuilder($class)->getMock();
+        if (!class_exists($class)) {
+            throw new Exception('Unable to mock Craft service. Class not found:'.$class);
+        }
 
+        $mock = $this->getMockBuilder($class)->getMock();
         $this->setComponent(craft(), $service, $mock);
 
         return $mock;

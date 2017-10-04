@@ -20,7 +20,7 @@ class TobiasAxPlugin extends BasePlugin
      */
     public function getVersion()
     {
-        return '1.0';
+        return '1.0.1';
     }
 
     /**
@@ -57,6 +57,9 @@ class TobiasAxPlugin extends BasePlugin
         $this->autoloadExceptions();
         $this->autoloadFilters();
 
+        // Import additional classes
+        Craft::import('plugins.tobiasax.interfaces.*');
+        Craft::import('plugins.tobiasax.etc.sanitizers.*');
 
         // allow plugins to register custom element type
         craft()->tobiasAx_advert->registerPluginElementType();

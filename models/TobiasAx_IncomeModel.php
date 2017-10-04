@@ -14,7 +14,7 @@ class TobiasAx_IncomeModel extends TobiasAx_EntityModel
     protected function defineAttributes()
     {
         return array_merge(parent::defineAttributes(), array(
-            'Amount' => AttributeType::Number,
+            'Amount' => array(AttributeType::Number, 'decimals' => 0),
             'GrossNet' => AttributeType::String,
             'Id' => AttributeType::String,
             'Period' => AttributeType::String,

@@ -37,10 +37,10 @@ class TobiasAx_RegistrationModel extends TobiasAx_EntityModel
     {
         return array_merge(parent::defineAttributes(), array(
             'BankAccount' => AttributeType::String,
-            'BuyRent' => AttributeType::String,
+            'BuyRent' => array(AttributeType::String, 'default' => 'Rent'),
             'CoRegistrants' => array(AttributeType::ClassName, 'default' => array(), 'models' => 'Craft\TobiasAx_CoRegistrantModel', 'exclude'=>[TobiasAX_ModelScenario::CREATE, TobiasAX_ModelScenario::UPDATE]),
-            'CurrentHousing' => AttributeType::String,
-            'CurrentRentSellingPrice' => AttributeType::Number,
+            'CurrentHousing' => array(AttributeType::String, 'default' => 'None'),
+            'CurrentRentSellingPrice' => array(AttributeType::Number, 'decimals' => 2),
             'FamilySize' => AttributeType::Number,
             'FinalDate' => AttributeType::DateTime,
             'FocusGroupId' => AttributeType::String,

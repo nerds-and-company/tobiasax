@@ -159,6 +159,14 @@ class TobiasAx_ImportModel extends TobiasAx_ImportBaseModel
     /**
      * @return int
      */
+    public function getBedrooms()
+    {
+        return (int) $this->getBuildingAttributeValueById('AANTSLKAM');
+    }
+
+    /**
+     * @return int
+     */
     public function getLivingRoomSize()
     {
         return (int)$this->getBuildingAttributeValueById('Woonkamer');

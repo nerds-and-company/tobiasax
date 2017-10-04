@@ -15,6 +15,7 @@ class TobiasAx_RegisterModel extends BaseModel
         return array_merge(parent::defineAttributes(), array(
             'id' => AttributeType::Number,
             'paymentCode' => AttributeType::Number,
+            'registrationId' => AttributeType::String,
         ));
     }
 }

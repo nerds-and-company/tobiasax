@@ -103,7 +103,6 @@ class TobiasAx_PersonModel extends TobiasAx_EntityModel
             'Infix' => AttributeType::String,
             'Initials' => AttributeType::String,
             'IntroductoryName' => array(AttributeType::String, 'exclude' => [TobiasAX_ModelScenario::CREATE, TobiasAX_ModelScenario::UPDATE]),
-            'Nationality' => AttributeType::String,
             'Lastname' => AttributeType::String,
             'Maidenname' => array(AttributeType::String, 'exclude' => [TobiasAX_ModelScenario::CREATE, TobiasAX_ModelScenario::UPDATE]),
             'MaritalStatus' => array(AttributeType::String, 'exclude' => [TobiasAX_ModelScenario::CREATE, TobiasAX_ModelScenario::UPDATE]),
@@ -113,7 +112,7 @@ class TobiasAx_PersonModel extends TobiasAx_EntityModel
             'PersonNumber' => array(AttributeType::String, 'exclude' => [TobiasAX_ModelScenario::CREATE, TobiasAX_ModelScenario::UPDATE]),
             'PlaceOfBirth' => AttributeType::String,
             'Roles' => array(AttributeType::ClassName, 'default' => array(), 'models' => 'Craft\TobiasAx_PersonRoleModel', 'exclude' => [TobiasAX_ModelScenario::CREATE, TobiasAX_ModelScenario::UPDATE]),
-            'Type' => AttributeType::String,
+            'Type' => array(AttributeType::String, 'default' => 'Person'),
             'VATNumber' => array(AttributeType::String, 'exclude' => [TobiasAX_ModelScenario::CREATE, TobiasAX_ModelScenario::UPDATE])
         ));
     }

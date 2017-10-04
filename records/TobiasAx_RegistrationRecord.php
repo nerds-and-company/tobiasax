@@ -24,6 +24,7 @@ class TobiasAx_RegistrationRecord extends BaseRecord
             'data' => AttributeType::Mixed,
             'paymentCode' => AttributeType::Number,
             'paymentStatus' => AttributeType::String,
+            'registrationId' => AttributeType::String,
         ));
     }
 }

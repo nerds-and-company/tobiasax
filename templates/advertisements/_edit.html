@@ -13,6 +13,7 @@
 
 {% block content %}
 	<form method="post" accept-charset="UTF-8" enctype="multipart/form-data">
+		{{ getCsrfInput() }}
 		<input type="hidden" name="action" value="tobiasAx/saveElement">
 		<input type="hidden" name="redirect" value="tobiasax">
 		<input type="hidden" name="advertTypeId" value="{{ type.id }}">

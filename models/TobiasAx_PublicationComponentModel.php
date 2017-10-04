@@ -28,7 +28,7 @@ class TobiasAx_PublicationComponentModel extends TobiasAx_EntityModel
         return array_merge(parent::defineAttributes(), array(
             'Description' => AttributeType::String,
             'Id' => AttributeType::String,
-            'Value' => AttributeType::Number,
+            'Value' => array(AttributeType::Number, 'decimals' => 2),
         ));
     }
 }

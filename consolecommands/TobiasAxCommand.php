@@ -12,8 +12,11 @@ class TobiasAxCommand extends BaseCommand
      */
     public function actionCreateImportTask()
     {
-        craft()->tobiasAx_import->startTask();
-        echo "Created TobiasAX import task";
+        if (craft()->tobiasAx_import->startTask()) {
+            echo "Created TobiasAX import task";
+        } else {
+            echo "Unable to create TobiasAX import task";
+        }
     }
 
     /**

@@ -68,7 +68,7 @@ class TobiasAx_RegistrationStoreService extends BaseApplicationComponent
             $callback($data);
 
             // clear encrypted registration data
-            $this->clearData($record);
+            $this->clearData($record->id);
 
         } catch (Exception $e) {
             throw new Exception(Craft::t('Unable to finish registration “{registrationId}”. {message}', ['registrationId' => $registrationId, 'message' => $e->getMessage()]));
@@ -76,13 +76,28 @@ class TobiasAx_RegistrationStoreService extends BaseApplicationComponent
     }
 
     /**
+     * Stores TobiasAX registration id
+     * @param int $registerId internal registation id
+     * @param  string $registrationId TobiasAX registration id
+     * @return bool
+     */
+    public function saveRegistrationId($registerId, $registrationId)
+    {
+        $record = TobiasAx_RegistrationRecord::model()->findById($registerId);
+        $record->registrationId = $registrationId;
+
+        return $record->save();
+    }
+
+    /**
      * Clears encrypted data for privacy reasons
-     * @param TobiasAx_RegistrationRecord $record
+     * @param int $registerId
      * @return TobiasAx_RegistrationRecord
      * @throws Exception
      */
-    public function clearData(TobiasAx_RegistrationRecord $record)
+    public function clearData($registerId)
     {
+        $record = TobiasAx_RegistrationRecord::model()->findById($registerId);
         $record->data = null;
 
         if (!$record->save()) {

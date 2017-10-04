@@ -69,7 +69,7 @@ class TobiasAx_ImportTask extends BaseTask
             craft()->tobiasAx_advert->saveElement($model);
             $this->elementIds[] = $model->id;
         } catch (Exception $e) {
-            TobiasAxPlugin::log('Unable to save advertisement '.$e->getMessage() . ' failed', ['model' => $model, 'errors' => $model->errors], LogLevel::Error);
+            TobiasAxPlugin::log(Craft::t('Unable to save advertisement #{tobiasId}: {message}', ['message' => $e->getMessage(), 'tobiasId' => $model->tobiasId]), LogLevel::Error);
         }
 
         // Run cleanup after import finished

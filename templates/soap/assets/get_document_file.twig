@@ -1,0 +1,9 @@
+{% extends 'tobiasax/templates/soap/_wsa_envelope' %}
+
+{% block body_content %}
+  <cus:GetDocumentFile>
+    <cus:id>{{ id }}</cus:id>
+    <cus:checksum>{{ checksum }}</cus:checksum>
+    <cus:companyId>{{ companyId }}</cus:companyId>
+  </cus:GetDocumentFile>
+{% endblock %}

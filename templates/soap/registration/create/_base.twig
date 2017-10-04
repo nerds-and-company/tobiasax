@@ -1,0 +1,35 @@
+{% extends 'tobiasax/templates/soap/_wsa_envelope' %}
+
+{% block body_content %}
+  <cus:CreateSeekerRegistration>
+    <cus:seekerRegistration>
+      <sg4:BuyRent>{{ registration.BuyRent }}</sg4:BuyRent>
+      <sg4:CompanyId>{{ companyId }}</sg4:CompanyId>
+      <sg4:CurrentHousing>{{ registration.CurrentHousing }}</sg4:CurrentHousing>
+      <sg4:FamilySize>{{ registration.FamilySize|default('0') }}</sg4:FamilySize>
+      <sg4:Income>{{ registration.Income|default('0') }}</sg4:Income>
+      <sg4:InvoiceMethod>{{ registration.InvoiceMethod }}</sg4:InvoiceMethod>
+      <sg4:NumberOfChildren>{{ registration.NumberOfChildren|default('0') }}</sg4:NumberOfChildren>
+
+      {% if registration.OccupancyDate %}
+      <sg4:OccupancyDate>{{ registration.OccupancyDate }}</sg4:OccupancyDate>
+      {% endif %}
+
+      <sg4:PropertySeeker>
+        {% block property_seeker %}
+          <sg:CompanyId>{{ companyId }}</sg:CompanyId>
+          <sg:Nationality>{{ registration.PropertySeeker.Nationality }}</sg:Nationality>
+        {% endblock %}
+        <sg1:SeekerRegistrations>
+          <sg1:SeekerRegistration />
+        </sg1:SeekerRegistrations>
+        <sg1:Status>{{ registration.PropertySeeker.Status|default('Active') }}</sg1:Status>
+      </sg4:PropertySeeker>
+      <sg4:RegistrationDateTime>{{ registration.RegistrationDateTime|date('c') }}</sg4:RegistrationDateTime>
+      <sg4:Status>{{ registration.Status|default('Active') }}</sg4:Status>
+      <sg4:TypeId>{{ registration.TypeId }}</sg4:TypeId>
+    </cus:seekerRegistration>
+    <cus:companyId>{{ companyId }}</cus:companyId>
+    <cus:expand>{{ expand }}</cus:expand>
+  </cus:CreateSeekerRegistration>
+{% endblock %}

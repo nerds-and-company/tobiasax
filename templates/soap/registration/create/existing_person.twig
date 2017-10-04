@@ -1,0 +1,6 @@
+{% extends 'tobiasax/templates/soap/registration/create/_base' %}
+
+{% block property_seeker %}
+  {{ parent() }}
+  <sg1:PersonId>{{ registration.PropertySeeker.PersonId }}</sg1:PersonId>
+{% endblock %}

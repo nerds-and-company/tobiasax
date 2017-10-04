@@ -11,7 +11,7 @@ class TobiasAx_PublicationConnectorService extends TobiasAx_ConnectorService
      * Default entity expand
      * @var string
      */
-    const DEFAULT_EXPAND = 'components,PropertyRegistration/RealEstateObject,PublicationTexts';
+    const DEFAULT_EXPAND = 'components,PropertyRegistration/RealEstateObject,PropertyRegistration/RealEstateObject/Prices,PublicationTexts';
 
     /**
      * Gets active publications

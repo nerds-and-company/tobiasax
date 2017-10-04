@@ -222,12 +222,12 @@ class TobiasAx_AdvertTypeService extends BaseApplicationComponent
     public function getPermissions()
     {
         $permissions = array(
-            'tobiasax:startImport' => array('label' => Craft::t('Start import')),
-            'tobiasax:editPeerEntries' => array('label' => Craft::t('Edit other authors’ entries'))
+            'tobiasax_startImport' => array('label' => Craft::t('Start import')),
+            'tobiasax_editPeerEntries' => array('label' => Craft::t('Edit other authors’ entries'))
         );
 
         foreach ($this->getAllTypes() as $type) {
-            $permissions['tobiasax:edit:' . $type->handle] = array('label' => $type->name . ' ' . strtolower(Craft::t('Edit entries')));
+            $permissions['tobiasax_edit_' . $type->handle] = array('label' => $type->name . ' ' . strtolower(Craft::t('Edit entries')));
         }
 
         return $permissions;

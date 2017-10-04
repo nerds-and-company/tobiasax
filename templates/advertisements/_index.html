@@ -15,7 +15,7 @@
 			</div>
 		</div>
 
-		{% if currentUser.can('tobiasax:startImport') %}
+		{% if currentUser.can('tobiasax_startImport') %}
 		<a href="{{ actionUrl('tobiasAx/startImport', {redirect: craft.request.path}) }}" style="margin:10px 0 25px 0" class="btn" data-icon="refresh"> {{ 'Import advertisements'|t }}</a>
 		{% endif %}
 

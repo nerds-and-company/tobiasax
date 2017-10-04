@@ -37,4 +37,24 @@ class TobiasAx_AssetConnectorService extends TobiasAx_ConnectorService
 
         return $request;
     }
+
+    /**
+     * Gets asset resource
+     * @param string $documentId
+     * @param string $checksum
+     * @return GuzzleClient
+     */
+    public function getAssetResource($documentId, $checksum)
+    {
+        $request = craft()->tobiasAx_request->createRequest(
+            'GetDocumentFile',
+            'tobiasax/templates/soap/assets/get_document_file',
+            [
+                'id' => $documentId,
+                'checksum' => $checksum,
+            ]
+        );
+
+        return $request;
+    }
 }

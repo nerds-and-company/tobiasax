@@ -26,11 +26,16 @@ class TobiasAx_RegistrationService extends BaseApplicationComponent
      * Get registration by person ID and status
      * @param string $personId
      * @param TobiasAX_RegistrationStatus $status
-     * @return TobiasAx_SeekerRegistrationModel
+     * @return TobiasAx_SeekerRegistrationModel[]
      */
     public function getRegistrationsByPerson($personId, $status = TobiasAX_RegistrationStatus::ACTIVE)
     {
         $propertySeeker = craft()->tobiasAx_propertySeeker->getPropertySeekerByPersonId($personId);
+
+        if ($propertySeeker == null) {
+            return [];
+        }
+
         $registrations = $propertySeeker->getRegistrationsByStatus($status);
 
         return $registrations;
@@ -54,19 +59,18 @@ class TobiasAx_RegistrationService extends BaseApplicationComponent
     }
 
     /**
+     * @param int $registerId internal stored registration id
      * @param TobiasAx_RegistrationModel $registration
      * @return TobiasAx_RegistrationModel
      * @throws TobiasAx_SoapException $e Thrown when a registration can't be created
      */
-    public function createRegistration($registration)
+    public function createRegistration($registerId, $registration)
     {
         $coRegistrants = $registration->CoRegistrants;
-
         $service = craft()->tobiasAx_registrationConnector;
 
         try {
             $envelope = $service->sendRequest($service->createRegistration($registration));
-
             $result = $service->extractSingle($envelope, 'Body/xmlns:CreateSeekerRegistrationResponse/xmlns:CreateSeekerRegistrationResult');
         } catch (Exception $e) {
             throw new TobiasAx_SoapException(static::ERROR_CREATE_UNKNOWN . 'registration: ' . $e->getMessage(), null, $e);
@@ -74,6 +78,10 @@ class TobiasAx_RegistrationService extends BaseApplicationComponent
 
         $registration = new TobiasAx_RegistrationModel($result);
 
+        // store external registation id for future reference
+        craft()->tobiasAx_registrationStore->saveRegistrationId($registerId, $registration->Id);
+
+        // add co-registrants to created registration
         foreach ($coRegistrants as $coRegistrant) {
             $this->createCoRegistrant($coRegistrant, $registration->Id);
         }

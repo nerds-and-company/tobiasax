@@ -4,6 +4,11 @@ namespace Craft;
 
 use Exception;
 
+use Guzzle\Http\Client as GuzzleClient;
+use Guzzle\Http\Exception\BadResponseException;
+use Guzzle\Http\Exception\CurlException;
+use Guzzle\Stream\PhpStreamRequestFactory;
+
 /**
  * Tobias AX asset download service
  */
@@ -20,6 +25,11 @@ class TobiasAx_AssetDownloadService extends BaseApplicationComponent
     const DEFAULT_IMAGE_HEIGHT = 600;
 
     /**
+     * @var integer
+     */
+    const DEFAULT_MAX_SIZE = 10;
+
+    /**
      * Download and resize assets for given types
      * @param TobiasAx_PublicationAssetsModel $assetsModel
      * @param array $types
@@ -29,8 +39,14 @@ class TobiasAx_AssetDownloadService extends BaseApplicationComponent
     public function downloadAssets($assetsModel, $types = null, $resizeImages = true)
     {
         $directory = craft()->path->getTempUploadsPath();
-        $urls = $this->formatAssetUrls($assetsModel, $types);
-        $files = $this->downloadFiles($urls, $directory);
+
+        if ($assetsModel instanceof ITobiasAx_AssetUrlResource) {
+            $urls = $this->formatAssetUrls($assetsModel, $types);
+            $files = $this->downloadFiles($urls, $directory);
+        } else {
+            $assets = $assetsModel->getByType($types);
+            $files = $this->downloadStreams($assets, $directory);
+        }
 
         if ($resizeImages) {
             $images = $this->filterImages($files);
@@ -55,6 +71,86 @@ class TobiasAx_AssetDownloadService extends BaseApplicationComponent
         }
 
         return $urls;
+    }
+
+    /**
+     * Download multiple files using webservice stream
+     * @param TobiasAx_AssetModel[] $assets
+     * @param  string $targetFolder
+     * @return array
+     */
+    public function downloadStreams($assets, $targetFolder)
+    {
+        $files = [];
+
+        foreach ($assets as $asset) {
+            try {
+                $saveTo = $targetFolder.$asset->Filename;
+                $this->downloadStream($asset, $saveTo);
+                $files[] = $saveTo;
+            } catch (Exception $e) {
+                TobiasAxPlugin::log($e->getMessage(), LogLevel::Error);
+            }
+        }
+
+        return $files;
+    }
+
+    /**
+     * Download a file from stream
+     * @param TobiasAx_AssetModel $asset
+     * @param string $saveTo
+     * @throws Exception
+     * @return bool
+     */
+    public function downloadStream($asset, $saveTo)
+    {
+        $request = craft()->tobiasAx_assetConnector
+            ->getAssetResource($asset->Id, $asset->Checksum);
+        $stream = (new PhpStreamRequestFactory())->fromRequest($request);
+        $startFragment = '<GetDocumentFileResult>';
+        $endFragment = '<';
+        $start = $end = false;
+        $maxBytes = 1024 * 1024 * $this->getMaxAssetSize();
+        $bufferSize = 256;
+        $content = '';
+
+        // find file stream start position
+        while ($start == false && !$stream->feof()) {
+            $content .= $stream->read($bufferSize);
+            $start = stripos($content, $startFragment);
+        }
+
+        // no start position found
+        if ($start == false) {
+            throw new Exception('File stream contents not found');
+        }
+
+        // prepend previous suffix
+        $file = fopen($saveTo, 'w');
+        $content = substr($content, $start + strlen($startFragment));
+        fwrite($file, base64_decode($content));
+
+        // stream content to temp file
+        $size = 0;
+        while ($end == false && !$stream->feof()) {
+            if (($size += $bufferSize) > $maxBytes) {
+                throw new Exception('File stream exceeds maximum size');
+            }
+
+            $content = $stream->read($bufferSize);
+            $end = stripos($content, $endFragment);
+            $content = substr($content, 0, $end | strlen($content));
+            fwrite($file, base64_decode($content));
+        }
+
+        fclose($file);
+
+        if ($end == false) {
+            throw new Exception('Unkown error occured downloading file stream');
+        }
+
+        return file_exists($saveTo);
     }
 
     /**
@@ -223,5 +319,13 @@ class TobiasAx_AssetDownloadService extends BaseApplicationComponent
     protected function getAllowedImageExtensions()
     {
         return craft()->config->get('tobiasAxAllowedImageExtensions') ?? ['jpg', 'jpeg'];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getMaxAssetSize()
+    {
+        return craft()->config->get('tobiasAxAssetMaxSize') ?? static::DEFAULT_MAX_SIZE;
     }
 }

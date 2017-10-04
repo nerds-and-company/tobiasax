@@ -20,7 +20,7 @@ class TobiasAx_ServiceModel extends TobiasAx_EntityModel
         return array_merge(parent::defineAttributes(), array(
             'DefaultActive' => AttributeType::Bool,
             'Description' => AttributeType::String,
-            'Fee' => AttributeType::Number,
+            'Fee' => array(AttributeType::Number, 'decimals' => 2),
             'Id' => AttributeType::String,
             'Periods' => AttributeType::Number,
             'PeriodType' => AttributeType::String

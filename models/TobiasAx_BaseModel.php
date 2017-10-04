@@ -22,7 +22,7 @@ class TobiasAx_BaseModel extends BaseModel
     }
 
     /**
-     * Sets an attribute's value.
+     * Normalizes and sets an attribute's value
      *
      * @param string $name
      * @param mixed $value
@@ -58,6 +58,11 @@ class TobiasAx_BaseModel extends BaseModel
         return $value;
     }
 
+    /**
+     * Whether given input is a populated model
+     * @param mixed $value
+     * @return boolean
+     */
     private function isPopulatedModel($value)
     {
         if (count($value) == 0) {
@@ -99,8 +104,8 @@ class TobiasAx_BaseModel extends BaseModel
     }
 
     /**
-     * Whether array is an enumeration or single element
-     * @param  array $value
+     * Whether given input is an enumeration or single element
+     * @param array $value
      * @return boolean
      */
     protected function isEnumeration($value)
@@ -118,8 +123,8 @@ class TobiasAx_BaseModel extends BaseModel
 
     /**
      * Gets the model's 'create' attributes
-     * @param null $names
-     * @param null $flattenValues
+     * @param array $names filters attributes by name
+     * @param bool $flattenValues Will change a DateTime object to a timestamp, Mixed to array, etc. Useful for saving
      * @return array
      */
     public function getCreateAttributes($names = null, $flattenValues = null)
@@ -129,8 +134,8 @@ class TobiasAx_BaseModel extends BaseModel
 
     /**
      * Gets the model's 'update' attributes
-     * @param null $names
-     * @param null $flattenValues
+     * @param array $names filters attributes by name
+     * @param bool $flattenValues Will change a DateTime object to a timestamp, Mixed to array, etc. Useful for saving
      * @return array
      */
     public function getUpdateAttributes($names = null, $flattenValues = null)
@@ -140,8 +145,8 @@ class TobiasAx_BaseModel extends BaseModel
 
     /**
      * Gets the model's 'update' attributes
-     * @param null $names
-     * @param null $flattenValues
+     * @param array $names filters attributes by name
+     * @param bool $flattenValues Will change a DateTime object to a timestamp, Mixed to array, etc. Useful for saving
      * @return array
      */
     public function getDeleteAttributes($names = null, $flattenValues = null)
@@ -151,8 +156,8 @@ class TobiasAx_BaseModel extends BaseModel
 
     /**
      * Gets the model's 'get' attributes
-     * @param null $names
-     * @param null $flattenValues
+     * @param array $names filters attributes by name
+     * @param bool $flattenValues Will change a DateTime object to a timestamp, Mixed to array, etc. Useful for saving
      * @return array
      */
     public function getGetAttributes($names = null, $flattenValues = null)
@@ -160,6 +165,13 @@ class TobiasAx_BaseModel extends BaseModel
         return $this->getScenarioAttributes(TobiasAX_ModelScenario::GET, $names, $flattenValues);
     }
 
+    /**
+     * Returns attributes for given scenario
+     * @param TobiasAX_ModelScenario $scenario
+     * @param array $names filters attributes
+     * @param bool $flattenValues Will change a DateTime object to a timestamp, Mixed to array, etc. Useful for saving
+     * @return array
+     */
     private function getScenarioAttributes($scenario, $names, $flattenValues)
     {
         if (!isset($scenario)) {
@@ -181,7 +193,7 @@ class TobiasAx_BaseModel extends BaseModel
 
     /**
      * Returns the list of this model's attribute names.
-     * @param $scenario
+     * @param TobiasAX_ModelScenario $scenario
      * @return array
      */
     public function attributeNames($scenario = null)

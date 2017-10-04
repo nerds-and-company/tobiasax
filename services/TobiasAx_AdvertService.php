@@ -74,6 +74,7 @@ class TobiasAx_AdvertService extends BaseApplicationComponent
             ->from('tobiasax_advertisement a')
             ->join('tobiasax_adverttype t', 't.id = a.advertTypeId')
             ->where('t.handle = :type', [':type' => $type])
+            ->andWhere('a.tobiasId IS NOT NULL')
             ->andWhere(['not in', 'a.id', $elementIds]);
 
         if ($filteredIds = $query->queryColumn()) {

@@ -25,6 +25,7 @@ class TobiasAx_RegistrationServiceTest extends TobiasAx_AbstractTest
         $this->service = new TobiasAx_RegistrationService();
 
         $this->getMockTobiasAxRegistrationConnectorService();
+        $this->getMockTobiasAxRegistrationStoreService();
     }
 
     /**
@@ -44,6 +45,18 @@ class TobiasAx_RegistrationServiceTest extends TobiasAx_AbstractTest
     }
 
     /**
+     * Sets a mock Registration Store Service on the craft() object and returns the mock.
+     *
+     * @return Mock
+     */
+    protected function getMockTobiasAxRegistrationStoreService()
+    {
+        $registrationStoreService = $this->getMockCraftService(TobiasAx_RegistrationStoreService::class, 'tobiasAx_registrationStore');
+
+        return $registrationStoreService;
+    }
+
+    /**
      * Tests the creation of a registration
      */
     public function testCreateRegistrationWithPartner()
@@ -55,7 +68,7 @@ class TobiasAx_RegistrationServiceTest extends TobiasAx_AbstractTest
 
         $comparisonRegistration = clone $registration;
 
-        $createdRegistration = $this->service->createRegistration($registration);
+        $createdRegistration = $this->service->createRegistration(0, $registration);
 
         $this->assertNotNull($createdRegistration);
         $this->assertNotNull($createdRegistration->PropertySeeker);

@@ -24,6 +24,9 @@ class TobiasAx_CoRegistrantModel extends TobiasAx_PersonModel
         }
     }
 
+    /**
+     * @return string
+     */
     public function getId()
     {
         return $this->Id;
@@ -37,8 +40,8 @@ class TobiasAx_CoRegistrantModel extends TobiasAx_PersonModel
     {
         return array_merge(parent::defineAttributes(), array(
             'CoContractor' => AttributeType::Bool,
-            'CoRegistrantType' => AttributeType::String,
-            'Income' => AttributeType::Number,
+            'CoRegistrantType' => array(AttributeType::String, 'default' => 'CoRegistrant'),
+            'Income' => array(AttributeType::Number, 'default' => 0),
             'Name' => AttributeType::String,
             'PersonId' => AttributeType::String,
             'RegistrationDateTime' => AttributeType::DateTime

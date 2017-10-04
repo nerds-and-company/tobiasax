@@ -26,9 +26,17 @@ class TobiasAx_RegistrationConnectorService extends TobiasAx_ConnectorService
             'expand' => static::DEFAULT_EXPAND,
         ], $data);
 
+        if (!empty($registration->PropertySeeker->Id)) {
+            $template = 'existing_propertyseeker';
+        } elseif (!empty($registration->PropertySeeker->PersonId)) {
+            $template = 'existing_person';
+        } else {
+            throw new TobiasAx_SoapException('Unable to create registration. Either propertyseeker `PersonId` or `Id` should be set');
+        }
+
         $request = craft()->tobiasAx_request->createRequest(
             'CreateSeekerRegistration',
-            'tobiasax/templates/soap/registration/create',
+            'tobiasax/templates/soap/registration/create/'.$template,
             $data
         );
 

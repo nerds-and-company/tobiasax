@@ -111,6 +111,12 @@ class TobiasAx_ImportService extends BaseApplicationComponent
             }
         }
 
+        // maps address using geocoding
+        if ($importModel instanceof ITobiasAx_Geocodable) {
+            $mapModel = craft()->tobiasAx_utils->geocodeAddress($importModel->getGeocodingAddress());
+            $element->getContent()->setAttribute($importModel->getGeocodingFieldHandle(), $mapModel->toJson());
+        }
+
         return $element;
     }
 
@@ -212,18 +218,39 @@ class TobiasAx_ImportService extends BaseApplicationComponent
 
     /**
      * Creates import task
-     * @param bool $checkPending    Checks for pending tasks
+     * @param bool $checkPending checks for pending tasks
      * @throws \Exception
-     * @return TaskModel
+     * @return TaskModel|null
      */
     public function startTask($checkPending = true)
     {
+        $this->deleteStaleTask($this->getMaxInactivity());
+
         if ($checkPending && $this->hasPendingTask()) {
-            // TODO: report to rollbar
-            throw new TobiasAx_SystemException('Unable to create import task because of pending task');
+            TobiasAxPlugin::log(Craft::t('Unable to create import task because of pending task'), LogLevel::Info);
+        } else {
+            return craft()->tasks->createTask('TobiasAx_Import', Craft::t('Import TobiasAX publications'));
+        }
+    }
+
+    /**
+     * Deletes stale task by given max inactivity
+     * @param int $maxInactivity in seconds
+     */
+    public function deleteStaleTask($maxInactivity)
+    {
+        $task = craft()->tasks->getRunningTask();
+
+        if ($task == null) {
+            return;
         }
 
-        return craft()->tasks->createTask('TobiasAx_Import', Craft::t('Import TobiasAX publications'));
+        $inactivity = time() - $task->dateUpdated->getTimestamp();
+
+        if ($task->type == 'TobiasAx_Import' && $inactivity > $maxInactivity) {
+            craft()->tasks->deleteTaskById($task->id);
+            TobiasAxPlugin::log(Craft::t('Deleted stale task #{taskId} at step {currentStep} of {totalSteps} after inactivity of {inactivity} seconds', ['taskId' => $task->id, 'currentStep' => $task->currentStep, 'totalSteps' => $task->totalSteps, 'inactivity' => $inactivity]), LogLevel::Info);
+        }
     }
 
     /**
@@ -232,7 +259,7 @@ class TobiasAx_ImportService extends BaseApplicationComponent
      */
     public function hasPendingTask()
     {
-        return count(craft()->tasks->getPendingTasks('TobiasAx_Import', 1)) > 0;
+        return craft()->tasks->areTasksPending('TobiasAx_Import');
     }
 
     /**
@@ -251,5 +278,14 @@ class TobiasAx_ImportService extends BaseApplicationComponent
     public function getDistrictSection()
     {
         return craft()->config->get('tobiasAxDistrictSection');
+    }
+
+    /**
+     * Returns task max inactivity
+     * @return int
+     */
+    public function getMaxInactivity()
+    {
+        return craft()->config->get('tobiasAxImportMaxInactivity') ?? 5*60;
     }
 }
