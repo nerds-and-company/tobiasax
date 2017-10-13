@@ -4,8 +4,16 @@
   "minimum-stability": "dev",
   "authors": [
     {
-      "name": "Mark Pross",
-      "email": "m.pross@nerds.company"
+      "name": "Gijs Stegehuis",
+      "email": "g.stegehuis@nerds.company"
+    },
+    {
+      "name": "Maarten Rolefes",
+      "email": "m.rolefes@nerds.company"
+    },
+    {
+      "name": "Niek Schmoller",
+      "email": "n.schmoller@nerds.company"
     }
   ],
   "type": "craft-plugin",
