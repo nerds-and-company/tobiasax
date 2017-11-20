@@ -37,6 +37,24 @@ class TobiasAx_PersonModel extends TobiasAx_EntityModel
     }
 
     /**
+     * Get mail salutation combined of genderlabel, optional infix and lastname
+     * @return string
+     */
+    public function getMailSalutation()
+    {
+        $salutation = '';
+        if (strlen($genderLabel = $this->getGenderLabel()) > 0) {
+            $salutation .= $genderLabel . ' ';
+        }
+        if (strlen($this->Infix) > 0) {
+            $salutation .= ucfirst(strtolower($this->Infix)) . ' ';
+        }
+        $salutation .= ucfirst(strtolower($this->Lastname));
+
+        return $salutation;
+    }
+
+    /**
      * Get communication value by type
      * @param  string $type
      * @return string
