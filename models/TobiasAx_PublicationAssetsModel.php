@@ -34,9 +34,10 @@ class TobiasAx_PublicationAssetsModel extends TobiasAx_BaseModel
      *
      * @return boolean
      */
-    public function isUrlResourceCollection() {
-        $single_element = array_slice($this->Assets, 0, 1);
-        return array_shift($single_element) instanceof ITobiasAx_AssetUrlResource;
+    public function isUrlResourceCollection()
+    {
+        $singleElement = array_slice($this->Assets, 0, 1);
+        return array_shift($singleElement) instanceof ITobiasAx_AssetUrlResource;
     }
 
     /**
