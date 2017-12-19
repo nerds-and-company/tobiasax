@@ -30,6 +30,16 @@ class TobiasAx_PublicationAssetsModel extends TobiasAx_BaseModel
     }
 
     /**
+     * Check if the assets in this resource collection have a URL
+     *
+     * @return boolean
+     */
+    public function isUrlResourceCollection() {
+        $single_element = array_slice($this->Assets, 0, 1);
+        return array_shift($single_element) instanceof ITobiasAx_AssetUrlResource;
+    }
+
+    /**
      * Defines attributes for this model
      * @return array
      */

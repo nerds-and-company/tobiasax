@@ -40,7 +40,7 @@ class TobiasAx_AssetDownloadService extends BaseApplicationComponent
     {
         $directory = craft()->path->getTempUploadsPath();
 
-        if ($assetsModel instanceof ITobiasAx_AssetUrlResource) {
+        if ($assetsModel->isUrlResourceCollection()) {
             $urls = $this->formatAssetUrls($assetsModel, $types);
             $files = $this->downloadFiles($urls, $directory);
         } else {
