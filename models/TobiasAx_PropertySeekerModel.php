@@ -61,7 +61,6 @@ class TobiasAx_PropertySeekerModel extends TobiasAx_PersonModel
             'Id' => AttributeType::String,
             'Income' => AttributeType::Number,
             'InvoiceMethod' => AttributeType::String,
-            'Nationality' => AttributeType::String,
             'PersonId' => AttributeType::String,
             'RegistrationDateTime' => AttributeType::DateTime,
             'SeekerRegistrations' => array(AttributeType::ClassName, 'default' => array(), 'models' => 'Craft\TobiasAx_RegistrationModel'),

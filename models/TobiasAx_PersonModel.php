@@ -126,6 +126,7 @@ class TobiasAx_PersonModel extends TobiasAx_EntityModel
             'MaritalStatus' => array(AttributeType::String, 'exclude' => [TobiasAX_ModelScenario::CREATE, TobiasAX_ModelScenario::UPDATE]),
             'Name' => array(AttributeType::String, 'exclude' => [TobiasAX_ModelScenario::CREATE, TobiasAX_ModelScenario::UPDATE]),
             'NationalIdentificationNumber' => array(AttributeType::String, 'exclude' => [TobiasAX_ModelScenario::CREATE, TobiasAX_ModelScenario::UPDATE]),
+            'Nationality' => AttributeType::String,
             'PersonNumber' => array(AttributeType::String, 'exclude' => [TobiasAX_ModelScenario::CREATE, TobiasAX_ModelScenario::UPDATE]),
             'PlaceOfBirth' => AttributeType::String,
             'Roles' => array(AttributeType::ClassName, 'default' => array(), 'models' => 'Craft\TobiasAx_PersonRoleModel', 'exclude' => [TobiasAX_ModelScenario::CREATE, TobiasAX_ModelScenario::UPDATE]),
