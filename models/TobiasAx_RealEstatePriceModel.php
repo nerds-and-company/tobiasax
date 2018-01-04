@@ -20,6 +20,7 @@ class TobiasAx_RealEstatePriceModel extends TobiasAx_EntityModel
         return array_merge(parent::defineAttributes(), array(
             'Adaptable' => AttributeType::Bool,
             'Amount' => array(AttributeType::Number, 'decimals' => 2),
+            'TaxAmount' => array(AttributeType::Number, 'decimals' => 2),
             'CostGroup' => AttributeType::String,
             'CostTypeId' => AttributeType::String,
             'CostTypeName' => AttributeType::String,
