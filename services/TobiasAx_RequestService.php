@@ -24,7 +24,12 @@ class TobiasAx_RequestService extends BaseApplicationComponent
         $endpoint = $this->getUrlEndpoint();
         $companyId = $this->getCompanyId();
         $addressingEndpoint = $this->getAddressingEndpoint();
+        $tobiasDebugLog = getenv('TOBIAS_DEBUG_LOG', true) ?: getenv('TOBIAS_DEBUG_LOG');
         $url = $endpoint.$actionName;
+
+        if ($tobiasDebugLog) {
+            $tobiasLog = fopen('TobiasAx.log', 'a');
+        }
 
         $data = array_merge([
             'endpoint' => $endpoint,
@@ -35,6 +40,12 @@ class TobiasAx_RequestService extends BaseApplicationComponent
         ], $data);
 
         $envelope = $this->renderEnvelope($template, $data);
+
+        if ($tobiasDebugLog) {
+            fwrite($tobiasLog, $url . "\n");
+            fwrite($tobiasLog, $envelope . "\n");
+        }
+
         $request = $this->createRequestClient($url, $envelope);
 
         return $request;

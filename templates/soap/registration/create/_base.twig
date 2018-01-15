@@ -18,9 +18,6 @@
       <sg4:PropertySeeker>
         {% block property_seeker %}
           <sg:CompanyId>{{ companyId }}</sg:CompanyId>
-          {% if registration.PropertySeeker.Nationality %}
-          <sg:Nationality>{{ registration.PropertySeeker.Nationality }}</sg:Nationality>
-          {% endif %}
         {% endblock %}
         <sg1:SeekerRegistrations>
           <sg1:SeekerRegistration />

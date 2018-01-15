@@ -2,5 +2,8 @@
 
 {% block property_seeker %}
   {{ parent() }}
+  {% if registration.PropertySeeker.Nationality %}
+    <sg:Nationality>{{ registration.PropertySeeker.Nationality }}</sg:Nationality>
+  {% endif %}
   <sg1:PersonId>{{ registration.PropertySeeker.PersonId }}</sg1:PersonId>
 {% endblock %}
