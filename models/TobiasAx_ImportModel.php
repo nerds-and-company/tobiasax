@@ -80,6 +80,14 @@ class TobiasAx_ImportModel extends TobiasAx_ImportBaseModel
     }
 
     /**
+     * @return float
+     */
+    public function getEligibleRent()
+    {
+        return floatval($this->Publication->EligibleRent)
+    }
+
+    /**
      * @return DateTime
      */
     public function getAvailableFrom()

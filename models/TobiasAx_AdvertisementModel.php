@@ -151,6 +151,11 @@ class TobiasAx_AdvertisementModel extends BaseElementModel
         return $this->content->nettoRent;
     }
 
+    public function getEligibleRent()
+    {
+        return $this->content->eligibleRent;
+    }
+
     public function getPriceConditionText()
     {
         if ($this->type->handle == 'rent') {
